@@ -1,0 +1,10 @@
+{
+	"id": "YokDeck",
+	"name": "Yok Deck",
+	"author": ["Prrrki", "McAwesome"],
+	"description": "yokin",
+	"prefix": "yokdeck",
+	"main_file": "YokDeck.lua",
+	"display_name": "YOK",
+	"version": "1.0.0",
+}
