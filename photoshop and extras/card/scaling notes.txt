@@ -1,0 +1,9 @@
+for all cards, the symbol and suit parts have been scaled to 94%
+the number cards have been scaled to 96%
+
+the remaining cards have been scaled to about:
+hearts: ace - 97%, king - 94%, queen - 90%, jack - 94%
+flowers: ace - 91%, king - 90%, queen - 90%, jack - 91%
+eggs: ace - 91%, king - 93%, queen - 90%, jack - 90%
+stones: ace - 94%, king - 90%, queen - 88%, jack - 88%
+these percentages may be very slightly off because photoshop is weird
