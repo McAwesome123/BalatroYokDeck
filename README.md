@@ -1,4 +1,4 @@
-# YokDeck
+# BalatroYokDeck
 A mod for [Balatro](https://www.playbalatro.com/) that adds [the yokdeck](https://fractalthorns.com/subproject/yokdeck) as a deck skin.
 
 ## Installing
