@@ -81,3 +81,91 @@ for _, suit in ipairs(suits) do
 		posStyle = "deck"
 	}
 end
+
+function set_up_wild_card_override()
+	local custom_enhancers_key = "yokdeck_enhancers"
+	local custom_enhancers_path = "Enhancers.png"
+
+	SMODS.Atlas {
+		key = custom_enhancers_key,
+		px = 71,
+		py = 95,
+		path = custom_enhancers_path,
+		prefix_config = {key = false}
+	}
+	
+	function using_alt_deck() 
+		for _, suit in ipairs(suits) do
+			local suit_key = suit:gsub("^%l", string.upper)
+			
+			if G.SETTINGS.CUSTOM_DECK.Collabs[suit_key] ~= "yokdeck_"..suit..skin_key_alt then
+				return false
+			end
+		end	
+		
+		return true
+	end
+
+	local wild_card = SMODS.Enhancement:take_ownership("m_wild", {}, true)
+	
+	function enable_custom_wild_cards()
+		wild_card.atlas = custom_enhancers_key
+	end
+	
+	function disable_custom_wild_cards()
+		wild_card.atlas = nil
+	end
+	
+	local queue_wild_card_events = {
+		wait_for_alt_deck_chosen = nil,
+		wait_for_alt_deck_unchosen = nil
+	}
+	
+	local wait_for_alt_deck_chosen_event = Event {
+		func = function()
+			if not using_alt_deck() then 
+				return false 
+			end
+			
+			enable_custom_wild_cards()
+			queue_wild_card_events.wait_for_alt_deck_unchosen()
+			
+			return true
+		end,
+		blocking = false,
+		no_delete = true
+	}
+	
+	local wait_for_alt_deck_unchosen_event = Event {
+		func = function()
+			if using_alt_deck() then 
+				return false 
+			end
+			
+			disable_custom_wild_cards()
+			queue_wild_card_events.wait_for_alt_deck_chosen()
+			
+			return true
+		end,
+		blocking = false,
+		no_delete = true
+	}
+	
+	queue_wild_card_events.wait_for_alt_deck_unchosen = function() 
+		G.E_MANAGER:add_event(wait_for_alt_deck_unchosen_event)
+	end
+	
+	queue_wild_card_events.wait_for_alt_deck_chosen = function()
+		G.E_MANAGER:add_event(wait_for_alt_deck_chosen_event)
+	end
+	
+	if using_alt_deck() then
+		enable_custom_wild_cards()
+		queue_wild_card_events.wait_for_alt_deck_unchosen()
+	else 
+		disable_custom_wild_cards()
+		queue_wild_card_events.wait_for_alt_deck_chosen()
+	end
+end
+
+set_up_wild_card_override()
