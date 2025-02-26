@@ -109,12 +109,10 @@ function set_up_wild_card_override()
 	local wild_card = SMODS.Enhancement:take_ownership("m_wild", {}, true)
 	
 	function enable_custom_wild_cards()
-		print("enabling")
 		wild_card.atlas = custom_enhancers_key
 	end
 	
 	function disable_custom_wild_cards()
-		print("disabling")
 		wild_card.atlas = nil
 	end
 	
